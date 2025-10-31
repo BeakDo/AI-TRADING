@@ -43,7 +43,26 @@ Key variables:
 - `REDIS_URL`: Redis connection string
 - `ENTRY_SCORE_TH`, `TP_CHOICES`, `SL_ATR_CHOICES`, `TS_CHOICES_MIN`: strategy defaults
 
+## Quick start (single command)
+
+To bootstrap a local development environment without juggling multiple commands run:
+
+```
+python run.py
+```
+
+The helper script performs the following steps automatically:
+
+1. Copies `infra/.env.example` to `.env` (and `infra/.env` when missing) so configuration values exist.
+2. Creates a Python virtual environment in `.venv/` and installs `backend/requirements.txt` if they have changed.
+3. Installs the frontend npm dependencies (only when `package.json` or `package-lock.json` changes).
+4. Starts the FastAPI backend with auto-reload and launches the Next.js dashboard in development mode.
+
+Use `Ctrl+C` to stop both services simultaneously. Pass `--mode docker` if you prefer containers instead of local processes.
+
 ## Running with Docker Compose
+
+The run script can invoke Docker for you: `python run.py --mode docker`. To call Docker Compose manually:
 
 ```
 cd infra
