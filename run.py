@@ -93,31 +93,32 @@ def ensure_backend_dependencies(python_path: Path) -> None:
     marker.write_text(requirements_mtime)
 
 
-def ensure_frontend_dependencies() -> bool:
+def ensure_frontend_dependencies() -> Optional[str]:
     """npm 의존성이 없거나 패키지 정의가 변경되면 설치한다.
 
-    프런트엔드 준비가 완료되면 ``True``를, 그렇지 않으면 ``False``를 반환한다.
+    프런트엔드 실행 준비가 완료되면 ``npm`` 실행 파일 경로를 반환하고,
+    준비가 되지 않았으면 ``None``을 반환한다.
     """
     if not FRONTEND_PACKAGE_JSON.exists():
         print("[setup] 프런트엔드 package.json을 찾을 수 없어 npm 설치를 건너뜁니다.")
-        return False
+        return None
     npm_path = shutil.which("npm")
     if npm_path is None:
         print(
             "[setup] npm 실행 파일을 찾지 못했습니다. 프런트엔드 준비를 건너뜁니다. "
             "Node.js를 설치하거나 --mode docker를 사용하세요."
         )
-        return False
+        return None
     marker = FRONTEND_DIR / ".deps.stamp"
     package_mtime = str(max(FRONTEND_PACKAGE_JSON.stat().st_mtime,
                              FRONTEND_PACKAGE_LOCK.stat().st_mtime if FRONTEND_PACKAGE_LOCK.exists() else 0.0))
     dependencies_present = FRONTEND_NODE_MODULES.exists()
     if dependencies_present and marker.exists() and marker.read_text() == package_mtime:
-        return True
+        return npm_path
     print("[setup] 프런트엔드 의존성을 설치합니다 (npm install)")
     subprocess.check_call([npm_path, "install"], cwd=str(FRONTEND_DIR))
     marker.write_text(package_mtime)
-    return True
+    return npm_path
 
 
 def run_processes(defs: Iterable[ProcessDef]) -> None:
@@ -161,15 +162,15 @@ def launch_local() -> None:
         ))
     python_path = ensure_virtualenv()
     ensure_backend_dependencies(python_path)
-    frontend_ready = ensure_frontend_dependencies()
+    npm_path = ensure_frontend_dependencies()
 
     backend_env = os.environ.copy()
     backend_env.setdefault("PYTHONPATH", str(ROOT))
 
     backend_cmd = [str(python_path), "-m", "uvicorn", "backend.main:app", "--reload"]
     processes: List[ProcessDef] = [("backend", backend_cmd, ROOT, backend_env)]
-    if frontend_ready:
-        processes.append(("frontend", ["npm", "run", "dev"], FRONTEND_DIR, None))
+    if npm_path:
+        processes.append(("frontend", [npm_path, "run", "dev"], FRONTEND_DIR, None))
     else:
         print(
             "[run] 프런트엔드를 건너뜁니다. 백엔드 API만 실행됩니다."
