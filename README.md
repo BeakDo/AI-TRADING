@@ -36,7 +36,7 @@ cp infra/.env.example .env
 
 Key variables:
 
-- `KIS_APPKEY`, `KIS_APPSECRET`: API credentials
+- `KIS_APPKEY`, `KIS_APPSECRET`: API credentials (또는 대시보드에서 입력 가능)
 - `KIS_ACCOUNT_NO8`, `KIS_ACCOUNT_PROD2`: account identifiers
 - `KIS_IS_PAPER`: toggle paper vs live trading (default `false`)
 - `POSTGRES_DSN`: SQLAlchemy DSN (default docker compose value)
@@ -59,6 +59,8 @@ The helper script performs the following steps automatically:
 4. Starts the FastAPI backend with auto-reload and launches the Next.js dashboard in development mode.
 
 Use `Ctrl+C` to stop both services simultaneously. Pass `--mode docker` if you prefer containers instead of local processes.
+
+When the dashboard is running on a separate host/port, provide `NEXT_PUBLIC_BACKEND_URL` in `frontend/.env.local` (or the shell) so the UI knows how to reach the FastAPI server. By default it assumes `http://localhost:8000`.
 
 ## Running with Docker Compose
 
@@ -115,6 +117,13 @@ Consult the KIS developer portal for:
 - Overseas order REST API specification
 - WebSocket approval key issuance
 - Execution notification AES256 parameters
+
+### Managing credentials from the dashboard
+
+- Open `http://localhost:3000` and navigate to the **KIS API 자격 증명 관리** 패널.
+- Enter the 앱 키, 앱 시크릿, 계좌 구분(8자리), 상품 코드(2자리) and whether you want 모의 투자 or 실전.
+- Submitting the form writes the values to `infra/kis_credentials.json` with restrictive file permissions and immediately refreshes backend settings (no manual `.env` editing required).
+- 삭제하거나 교체하려면 빈 파일로 덮어쓰거나 UI에서 새 값을 입력하세요.
 
 ## Testing
 
