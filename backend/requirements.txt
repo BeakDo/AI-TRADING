@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+httpx
+websockets
+pydantic-settings
+sqlmodel
+aioredis
+pandas
+numpy
+scikit-learn
+lifelines

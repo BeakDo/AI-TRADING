@@ -1,0 +1,20 @@
+# Python virtual environments
+.venv/
+
+# Environment files
+.env
+infra/.env
+
+# Node modules and build artifacts
+frontend/node_modules/
+frontend/.next/
+frontend/dist/
+frontend/.deps.stamp
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Tooling artifacts
+*.log
+.DS_Store
