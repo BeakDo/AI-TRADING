@@ -1,7 +1,8 @@
 fastapi
 uvicorn[standard]
 httpx
-websockets
+# uvicorn은 websockets 12 이상에서 제거된 legacy 모듈에 의존하므로 호환 버전을 고정한다.
+websockets<12
 pydantic-settings
 sqlmodel
 aioredis
