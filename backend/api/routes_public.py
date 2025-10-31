@@ -1,4 +1,4 @@
-"""Public FastAPI routes exposing health and read-only strategy state."""
+"""상태 점검과 읽기 전용 전략 정보를 제공하는 공개 FastAPI 라우트."""
 from __future__ import annotations
 
 from typing import Any, Dict, List

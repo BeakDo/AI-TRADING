@@ -1,4 +1,4 @@
-"""Implements the initial surge detection heuristic."""
+"""초기 급등 탐지 휴리스틱 구현."""
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -13,7 +13,7 @@ class SurgeSignal:
 
 
 class SurgeDetector:
-    """Computes a surge score between 0 and 1 based on returns and volume."""
+    """수익률과 거래량을 기반으로 0~1 사이의 급등 점수를 계산한다."""
 
     def __init__(self, entry_threshold: float = 0.6, vol_spike_threshold: float = 3.0) -> None:
         self.entry_threshold = entry_threshold

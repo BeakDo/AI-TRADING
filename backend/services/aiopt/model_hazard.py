@@ -1,4 +1,4 @@
-"""Hazard modelling scaffold using lifelines."""
+"""lifelines를 활용한 해저드 모델링 스캐폴드."""
 from __future__ import annotations
 
 import numpy as np

@@ -1,4 +1,4 @@
-"""WebSocket ingestion utilities bridging adapters and processors."""
+"""어댑터와 프로세서를 연결하는 WebSocket 인제스트 유틸리티."""
 from __future__ import annotations
 
 import asyncio
@@ -9,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 class WebSocketIngestor:
-    """Wraps a :class:`MarketDataFeed` and funnels messages to processors."""
+    """:class:`MarketDataFeed`를 감싸 메시지를 프로세서로 전달한다."""
 
     def __init__(
         self,

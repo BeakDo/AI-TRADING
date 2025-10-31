@@ -23,7 +23,7 @@ class Bar:
 
 
 class BarAggregator:
-    """Aggregates tick data into OHLCV bars for multiple intervals."""
+    """틱 데이터를 다양한 구간의 OHLCV 바로 집계한다."""
 
     def __init__(self, intervals: Iterable[int]) -> None:
         self._intervals = list(intervals)

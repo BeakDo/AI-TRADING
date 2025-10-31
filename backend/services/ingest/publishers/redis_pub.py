@@ -1,4 +1,4 @@
-"""Redis publisher emitting aggregated market data and features."""
+"""집계된 시세와 피처를 발행하는 Redis 퍼블리셔."""
 from __future__ import annotations
 
 import json

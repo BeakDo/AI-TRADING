@@ -1,4 +1,4 @@
-"""Minimal SQLModel stub."""
+"""간단한 SQLModel 스텁."""
 from __future__ import annotations
 
 from typing import Any

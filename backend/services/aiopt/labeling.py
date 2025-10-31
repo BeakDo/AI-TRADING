@@ -1,4 +1,4 @@
-"""Label generation utilities for offline/online learning."""
+"""오프라인/온라인 학습용 라벨 생성 유틸리티."""
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -15,10 +15,10 @@ class LabelResult:
 
 
 def label_trades(df: pd.DataFrame) -> List[LabelResult]:
-    """Generate simple labels required by the signal and hazard models.
+    """신호/해저드 모델에 필요한 단순 라벨을 생성한다.
 
-    The scaffold assumes ``df`` contains columns ``price`` and ``timestamp`` and
-    produces synthetic labels for demonstration purposes.
+    이 스캐폴드는 ``df``가 ``price``와 ``timestamp`` 컬럼을 포함한다고 가정하며
+    데모 목적의 합성 라벨을 생성한다.
     """
 
     results: List[LabelResult] = []

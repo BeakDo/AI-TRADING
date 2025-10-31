@@ -1,4 +1,4 @@
-"""Wrapper utilities connecting AI policy with the execution bandit."""
+"""AI 정책과 실행 밴딧을 연결하는 래퍼 유틸리티."""
 from __future__ import annotations
 
 from dataclasses import dataclass

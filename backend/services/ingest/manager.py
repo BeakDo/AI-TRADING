@@ -1,4 +1,4 @@
-"""High level ingest service wiring sources, processors and publishers."""
+"""소스·프로세서·퍼블리셔를 연결하는 고수준 인제스트 서비스."""
 from __future__ import annotations
 
 import asyncio
@@ -13,7 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 class IngestService:
-    """Consumes raw trades and publishes aggregated features."""
+    """원시 체결을 수신해 집계 피처를 발행하는 서비스."""
 
     def __init__(
         self,

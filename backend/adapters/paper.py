@@ -1,10 +1,9 @@
-"""Paper trading adapter used for simulations and tests.
+"""시뮬레이션과 테스트에 사용하는 페이퍼 트레이딩 어댑터.
 
-The adapter follows the :class:`~backend.adapters.broker_base.Broker` interface
-and keeps all state in-memory, allowing the execution loop to run without
-external dependencies.  It implements a simple matching model that mimics
-market and limit order behaviour using a synthetic order book updated through
-:class:`PaperMarketDataFeed` events.
+이 어댑터는 :class:`~backend.adapters.broker_base.Broker` 인터페이스를 따르며
+모든 상태를 메모리에 보관해 실행 루프가 외부 의존성 없이 동작하도록 한다.
+또한 :class:`PaperMarketDataFeed` 이벤트로 갱신되는 가상 호가창을 이용해
+시장가와 지정가 주문 동작을 흉내 내는 간단한 매칭 모델을 구현한다.
 """
 from __future__ import annotations
 
@@ -35,7 +34,7 @@ class PaperOrder:
 
 
 class PaperMarketDataFeed:
-    """Simple market data feed used to approximate fills for market orders."""
+    """시장가 체결을 근사하기 위한 단순 시세 피드."""
 
     def __init__(self) -> None:
         self._last_trade: Dict[str, float] = {}
@@ -55,7 +54,7 @@ class PaperMarketDataFeed:
 
 
 class PaperAdapter(Broker):
-    """In-memory broker adapter implementing optimistic fill rules."""
+    """낙관적 체결 규칙을 구현한 인메모리 브로커 어댑터."""
 
     def __init__(self, data_feed: Optional[PaperMarketDataFeed] = None) -> None:
         self._orders: Dict[str, PaperOrder] = {}

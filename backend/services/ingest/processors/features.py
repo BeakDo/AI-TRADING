@@ -1,4 +1,4 @@
-"""Feature engineering utilities used by the signal engine."""
+"""신호 엔진에서 사용하는 피처 엔지니어링 유틸리티."""
 from __future__ import annotations
 
 from collections import defaultdict, deque
@@ -6,7 +6,7 @@ from typing import Deque, Dict, Iterable
 
 
 class FeatureComputer:
-    """Tracks rolling windows for return and volume based features."""
+    """수익률·거래량 기반 피처를 위한 롤링 윈도우를 관리한다."""
 
     def __init__(self, lookbacks: Iterable[int]) -> None:
         self._lookbacks = list(lookbacks)

@@ -1,22 +1,21 @@
 #!/usr/bin/env python3
-"""Convenience launcher for the AI Trading scaffold.
+"""AI Trading 스캐폴드를 위한 편의 런처.
 
-Running this script automates the most common development workflows so
-new contributors only have to execute a single command instead of
-manually creating virtual environments, installing dependencies, and
-starting multiple processes.
+이 스크립트는 가장 일반적인 개발 워크플로를 자동화하여, 새 기여자가
+가상환경 생성·의존성 설치·다중 프로세스 기동을 직접 수행하는 대신 한 번의
+명령으로 시작할 수 있게 한다.
 
-Usage examples
---------------
+사용 예시
+---------
 
-- ``python run.py`` → set up local virtualenv + npm deps and launch the
-  FastAPI backend with the Next.js dashboard in watch mode.
-- ``python run.py --mode docker`` → ensure ``infra/.env`` exists and
-  start the Docker Compose stack.
+- ``python run.py`` → 로컬 가상환경과 npm 의존성을 준비하고 FastAPI 백엔드와
+  Next.js 대시보드를 감시 모드로 실행한다.
+- ``python run.py --mode docker`` → ``infra/.env``를 확인한 뒤 Docker Compose
+  스택을 기동한다.
 
-The script is intentionally lightweight and safe: it only copies
-``infra/.env.example`` when an environment file is missing and records
-simple timestamps to avoid reinstalling dependencies unless required.
+스크립트는 의도적으로 가볍고 안전하게 설계되었다. 환경 파일이 없을 때만
+``infra/.env.example``을 복사하며, 필요할 때에만 의존성을 다시 설치하도록
+간단한 타임스탬프를 기록한다.
 """
 from __future__ import annotations
 
@@ -48,10 +47,9 @@ ProcessDef = Tuple[str, Sequence[str], Path, Optional[dict]]
 
 
 def copy_env_if_missing(target: Path, template: Path) -> bool:
-    """Copy ``template`` to ``target`` when the latter is absent.
+    """``target``이 없을 때 ``template``을 복사한다.
 
-    Returns ``True`` if a copy happened so the caller can surface a
-    helpful message.
+    복사가 수행되면 ``True``를 반환해 호출자가 안내 메시지를 보여줄 수 있게 한다.
     """
     if target.exists():
         return False
@@ -62,7 +60,7 @@ def copy_env_if_missing(target: Path, template: Path) -> bool:
 
 
 def venv_executable(name: str) -> Path:
-    """Return the path of an executable inside the managed virtualenv."""
+    """관리되는 가상환경 내부 실행 파일 경로를 반환한다."""
     if os.name == "nt":
         extension = ".exe"
         return VENV_DIR / "Scripts" / f"{name}{extension}"
@@ -70,7 +68,7 @@ def venv_executable(name: str) -> Path:
 
 
 def ensure_virtualenv() -> Path:
-    """Create the local virtual environment if it does not exist."""
+    """로컬 가상환경이 없으면 생성한다."""
     if not VENV_DIR.exists():
         print("[setup] Creating Python virtual environment (.venv)")
         subprocess.check_call([sys.executable, "-m", "venv", str(VENV_DIR)])
@@ -81,7 +79,7 @@ def ensure_virtualenv() -> Path:
 
 
 def ensure_backend_dependencies(python_path: Path) -> None:
-    """Install backend dependencies when requirements change."""
+    """요구 사항이 바뀌면 백엔드 의존성을 설치한다."""
     if not BACKEND_REQ.exists():
         print("[setup] No backend requirements.txt found; skipping Python deps")
         return
@@ -96,7 +94,7 @@ def ensure_backend_dependencies(python_path: Path) -> None:
 
 
 def ensure_frontend_dependencies() -> None:
-    """Install npm dependencies when missing or package definitions change."""
+    """npm 의존성이 없거나 패키지 정의가 변경되면 설치한다."""
     if not FRONTEND_PACKAGE_JSON.exists():
         print("[setup] No frontend package.json found; skipping npm deps")
         return
@@ -114,7 +112,7 @@ def ensure_frontend_dependencies() -> None:
 
 
 def run_processes(defs: Iterable[ProcessDef]) -> None:
-    """Launch multiple long-running processes and keep them alive."""
+    """여러 장기 실행 프로세스를 띄우고 생존 상태를 유지한다."""
     processes: List[Tuple[str, subprocess.Popen[str]]] = []
     try:
         for name, cmd, cwd, env in defs:
@@ -169,7 +167,7 @@ def launch_local() -> None:
 
 
 def detect_compose_command() -> Sequence[str]:
-    """Select docker compose CLI compatible with the host environment."""
+    """호스트 환경과 호환되는 docker compose CLI를 선택한다."""
     if shutil.which("docker") and shutil.which("docker-compose"):
         # Prefer new plugin when available but fall back to docker-compose explicitly if needed.
         return ["docker", "compose"]

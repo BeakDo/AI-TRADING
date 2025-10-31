@@ -1,4 +1,4 @@
-"""Reward calculation utilities for the bandit policy."""
+"""밴딧 정책을 위한 보상 계산 유틸리티."""
 from __future__ import annotations
 
 from dataclasses import dataclass

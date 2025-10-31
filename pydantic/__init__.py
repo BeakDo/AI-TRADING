@@ -1,4 +1,4 @@
-"""Minimal pydantic stub."""
+"""간단한 pydantic 스텁."""
 from __future__ import annotations
 
 from dataclasses import dataclass, field

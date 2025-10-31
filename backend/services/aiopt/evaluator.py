@@ -1,4 +1,4 @@
-"""Walk-forward evaluation helpers."""
+"""워크포워드 평가 헬퍼."""
 from __future__ import annotations
 
 from dataclasses import dataclass

@@ -1,4 +1,4 @@
-"""Order routing orchestrating broker interactions."""
+"""브로커 상호작용을 조율하는 주문 라우터."""
 from __future__ import annotations
 
 import asyncio

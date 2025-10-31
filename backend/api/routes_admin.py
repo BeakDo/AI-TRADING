@@ -1,4 +1,4 @@
-"""Administrative routes for toggling trading and updating parameters."""
+"""거래 온오프와 파라미터 수정을 담당하는 관리자용 라우트."""
 from __future__ import annotations
 
 from typing import Any, Dict

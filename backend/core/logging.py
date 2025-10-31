@@ -1,4 +1,4 @@
-"""Logging helpers configuring structured JSON logging."""
+"""구조화된 JSON 로깅을 설정하는 로깅 헬퍼."""
 from __future__ import annotations
 
 import json

@@ -1,9 +1,8 @@
-"""WebSocket client scaffold for the KIS overseas data streams.
+"""KIS 해외 데이터 스트림용 WebSocket 클라이언트 스캐폴드.
 
-The implementation provides reconnection logic, heartbeat management and a
-placeholder for AES-256 decryption used by the execution notification channel.
-The actual encryption parameters must be sourced from the official
-specification and are therefore left as TODO comments.
+이 구현은 재연결 로직, 하트비트 관리, 체결 통보 채널에서 사용하는
+AES-256 복호화를 위한 자리표시자를 제공한다. 실제 암호화 파라미터는 공식
+명세에서 확인해야 하므로 TODO 주석으로 남겨 두었다.
 """
 from __future__ import annotations
 
@@ -22,7 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 class KISWebSocketClient:
-    """Managed WebSocket connection with exponential backoff reconnection."""
+    """지수 백오프 재연결을 지원하는 관리형 WebSocket 연결."""
 
     def __init__(
         self,
@@ -46,7 +45,7 @@ class KISWebSocketClient:
             try:
                 await self._run_once()
                 backoff = 1.0
-            except Exception as exc:  # pragma: no cover - network errors hard to simulate
+            except Exception as exc:  # pragma: no cover - 네트워크 오류 재현 어려움
                 self._on_error(exc)
                 await asyncio.sleep(backoff)
                 backoff = min(backoff * 2, 60.0)
@@ -67,12 +66,11 @@ class KISWebSocketClient:
             await ws.send(json.dumps(sub))
 
     def _decode_payload(self, payload: str) -> Dict[str, Any]:
-        """Decode execution notifications with optional AES256 decryption.
+        """필요 시 AES256 복호화를 포함해 체결 통보를 디코딩한다.
 
-        The KIS overseas WebSocket encrypts execution events using AES-256-CBC.
-        Implementers must fill in the correct key derivation and IV handling
-        based on the official documentation.  The scaffold simply parses JSON
-        payloads and assumes they are plaintext.
+        KIS 해외 WebSocket은 체결 이벤트를 AES-256-CBC로 암호화한다. 구현자는
+        공식 문서를 참고해 올바른 키 파생과 IV 처리 로직을 채워 넣어야 한다.
+        이 스캐폴드는 JSON 페이로드를 단순 파싱하며 평문이라고 가정한다.
         """
 
         try:
@@ -83,7 +81,7 @@ class KISWebSocketClient:
 
 
 async def issue_ws_key(app_key: str, app_secret: str) -> str:
-    """Request a WebSocket approval key using the REST endpoint."""
+    """REST 엔드포인트를 통해 WebSocket 승인 키를 요청한다."""
 
     if not WS_SPEC.approval_key_path:
         raise RuntimeError("KIS WS specification incomplete; use PaperAdapter instead.")

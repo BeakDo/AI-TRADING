@@ -1,4 +1,4 @@
-"""Application configuration loaded from environment variables."""
+"""환경 변수에서 설정을 불러오는 애플리케이션 구성."""
 from __future__ import annotations
 
 from functools import lru_cache
@@ -10,20 +10,20 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 
-    # KIS
+    # KIS 설정
     KIS_APPKEY: str = ""
     KIS_APPSECRET: str = ""
     KIS_ACCOUNT_NO8: str = ""
     KIS_ACCOUNT_PROD2: str = ""
     KIS_IS_PAPER: bool = True
 
-    # Backend
+    # 백엔드 설정
     POSTGRES_DSN: str = "postgresql+psycopg://user:pass@db:5432/trader"
     REDIS_URL: str = "redis://redis:6379/0"
     JWT_SECRET: str = "change-me"
     DATA_PROVIDER: str = "KIS"
 
-    # Strategy defaults
+    # 전략 기본값
     TP_CHOICES: List[float] = [0.03, 0.04, 0.05, 0.06, 0.07, 0.08]
     TS_CHOICES_MIN: List[int] = [10, 15, 20]
     SL_ATR_CHOICES: List[float] = [1.0, 1.25, 1.5, 2.0]

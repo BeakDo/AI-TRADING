@@ -1,4 +1,4 @@
-"""Lightweight fill simulator used by tests and paper trading."""
+"""테스트와 페이퍼 트레이딩에서 사용하는 경량 체결 시뮬레이터."""
 from __future__ import annotations
 
 from dataclasses import dataclass

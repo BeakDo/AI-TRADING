@@ -1,8 +1,8 @@
-"""Authentication helpers for KIS OpenAPI.
+"""KIS OpenAPI 인증 헬퍼 모듈.
 
-The module exposes helpers that manage access tokens and WebSocket approval
-keys.  When the specification constants are empty the helper raises a
-:class:`RuntimeError`, prompting the caller to fall back to the paper adapter.
+이 모듈은 액세스 토큰과 WebSocket 승인 키를 관리하는 도우미를 제공한다.
+명세 상수가 비어 있는 경우 :class:`RuntimeError`를 발생시켜 호출자가
+PaperAdapter로 폴백하도록 안내한다.
 """
 from __future__ import annotations
 
@@ -19,11 +19,11 @@ logger = logging.getLogger(__name__)
 
 
 class KISAuthError(RuntimeError):
-    """Raised when authentication with KIS fails."""
+    """KIS 인증이 실패했을 때 발생하는 예외."""
 
 
 class KISAuthManager:
-    """Stateful manager that refreshes OAuth tokens and WS approval keys."""
+    """OAuth 토큰과 WS 승인 키를 갱신하는 상태 저장 매니저."""
 
     def __init__(
         self,

@@ -1,8 +1,8 @@
-"""HTTP client wrapper around the KIS overseas trading endpoints.
+"""KIS 해외 주식 거래 엔드포인트를 감싸는 HTTP 클라이언트 래퍼.
 
-All methods respect the :class:`~backend.adapters.broker_base.Broker` interface
-and provide graceful degradation to the :class:`PaperAdapter` when the
-specification constants are not yet configured.
+모든 메서드는 :class:`~backend.adapters.broker_base.Broker` 인터페이스를
+준수하며 명세 상수가 아직 설정되지 않은 경우 :class:`PaperAdapter`로
+안전하게 폴백한다.
 """
 from __future__ import annotations
 
@@ -18,7 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 class KISOverseasBroker(Broker):
-    """Minimal asynchronous wrapper around KIS overseas trading endpoints."""
+    """KIS 해외 거래 엔드포인트를 감싸는 최소한의 비동기 래퍼."""
 
     def __init__(
         self,
@@ -79,5 +79,5 @@ class KISOverseasBroker(Broker):
         data = response.json()
         return float(data.get("cash", 0.0))
 
-    async def stream_orders(self, on_event: Any) -> None:  # pragma: no cover - requires WS
+    async def stream_orders(self, on_event: Any) -> None:  # pragma: no cover - WS 필요
         raise NotImplementedError("KIS order streaming is not implemented in the scaffold")

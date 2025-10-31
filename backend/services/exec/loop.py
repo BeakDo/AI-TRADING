@@ -1,4 +1,4 @@
-"""Strategy loop wiring signals, bandit decisions and order routing."""
+"""신호, 밴딧 의사결정, 주문 라우팅을 연결하는 전략 루프."""
 from __future__ import annotations
 
 import asyncio
